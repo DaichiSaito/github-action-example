@@ -23,6 +23,16 @@ jobs:
         with:
           path: vendor/bundle
           key: bundle-${{ hashFiles('**/Gemfile.lock') }}
+      - uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: yarn-${{ hashFiles('**/yarn.lock') }}
+      - name: Set up yarn and node
+        run: |
+          curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+          echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+          curl -sL https://deb.nodesource.com/setup_12.x | bash -
+          apt install -y yarn nodejs
       - name: bundle install
         run: |
           gem install bundler
@@ -30,8 +40,8 @@ jobs:
       # - uses: borales/actions-yarn@v2.0.0
       #   with:
       #     cmd: install
-      # - name: yarn install
-      #   run: yarn install
+      - name: yarn install
+        run: yarn install
       - name: db create
         run: bundle exec rails db:create db:schema:load --trace
       - name: rspec
