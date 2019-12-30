@@ -16,6 +16,8 @@ jobs:
         image: mysql:5.7
     container:
       image: ruby:2.6.4
+      env:
+        RAILS_ENV: test
 
     steps:
       - uses: actions/checkout@v1 # https://github.com/actions/checkout/blob/master/action.yml
