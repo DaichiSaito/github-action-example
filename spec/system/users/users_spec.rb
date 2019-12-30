@@ -2,7 +2,10 @@ require 'rails_helper'
 
 RSpec.describe "Users", type: :system do
   before do
-    driven_by :selenium, using: :headless_chrome
+    driven_by :selenium, using: :headless_chrome do |driver_options|
+      driver_options.add_argument('--disable-dev-shm-usage')
+      driver_options.add_argument('--no-sandbox')
+    end
   end
 
   it 'is valid' do
