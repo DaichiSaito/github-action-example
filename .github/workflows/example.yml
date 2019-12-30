@@ -1,4 +1,4 @@
-name: Example
+name: RUN Rspec
 on:
   pull_request:
     branches:
@@ -6,9 +6,6 @@ on:
 
 jobs:
   build:
-    # name: Run spec
-
-    # ジョブを実行する仮想マシンを選択（ubuntu/macOS/Windows)
     runs-on: ubuntu-latest
 
     services:
@@ -23,7 +20,7 @@ jobs:
         RAILS_ENV: test
 
     steps:
-      - uses: actions/checkout@v1 # https://github.com/actions/checkout/blob/master/action.yml
+      - uses: actions/checkout@v1
       - uses: actions/cache@v1
         with:
           path: vendor/bundle
@@ -48,14 +45,11 @@ jobs:
         run: |
           gem install bundler
           bundle install --path vendor/bundle --quiet --jobs 4 --retry 3
-      # - uses: borales/actions-yarn@v2.0.0
-      #   with:
-      #     cmd: install
       - name: yarn install
         run: yarn install
-      - name: copy database.ci.yml to database.yml
+      - name: set database.yml
         run: cp -v config/database.ci.yml config/database.yml
       - name: db create
         run: bundle exec rails db:create db:schema:load --trace
-      - name: rspec
+      - name: run rspec
         run: bundle exec rspec
