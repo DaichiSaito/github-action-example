@@ -19,15 +19,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1 # https://github.com/actions/checkout/blob/master/action.yml
+      - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: bundle-${{ hashFiles('**/Gemfile.lock') }}
       - name: bundle install
         run: |
           gem install bundler
           bundle install --path vendor/bundle --quiet --jobs 4 --retry 3
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: install
-      - name: yarn install
-        run: yarn install
+      # - uses: borales/actions-yarn@v2.0.0
+      #   with:
+      #     cmd: install
+      # - name: yarn install
+      #   run: yarn install
       - name: db create
         run: bundle exec rails db:create db:schema:load --trace
       - name: rspec
