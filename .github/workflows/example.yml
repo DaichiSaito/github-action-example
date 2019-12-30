@@ -42,6 +42,8 @@ jobs:
       #     cmd: install
       - name: yarn install
         run: yarn install
+      - name: copy database.ci.yml to database.yml
+        run: cp -v config/database.ci.yml config/database.yml
       - name: db create
         run: bundle exec rails db:create db:schema:load --trace
       - name: rspec
