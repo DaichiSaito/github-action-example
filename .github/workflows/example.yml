@@ -17,12 +17,20 @@ jobs:
     container:
       image: ruby:2.6.4
 
+    strategy:
+      matrix:
+        node-version: [12.x]
+
     steps:
       - uses: actions/checkout@v1 # https://github.com/actions/checkout/blob/master/action.yml
       - name: bundle install
         run: |
           gem install bundler
           bundle install --path vendor/bundle --quiet --jobs 4 --retry 3
+      - name: Run tests with ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: yarn install
         run: yarn install
       - name: db create
