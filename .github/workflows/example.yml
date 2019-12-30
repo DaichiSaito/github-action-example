@@ -20,10 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1 # https://github.com/actions/checkout/blob/master/action.yml
       - name: bundle install
-        run: |
+        - run: |
           gem install bundler
           bundle install --path vendor/bundle --quiet --jobs 4 --retry 3
-        run: yarn install
-        run: bundle exec rails db:create
-        run: bundle exec rails db:create db:schema:load --trace
-        run: bundle exec rails rspec
+        - run: yarn install
+        - run: bundle exec rails db:create
+        - run: bundle exec rails db:create db:schema:load --trace
+        - run: bundle exec rails rspec
