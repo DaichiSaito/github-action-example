@@ -23,7 +23,9 @@ jobs:
         run: |
           gem install bundler
           bundle install --path vendor/bundle --quiet --jobs 4 --retry 3
-      run: yarn install
-      run: bundle exec rails db:create
-      run: bundle exec rails db:create db:schema:load --trace
-      run: bundle exec rails rspec
+      - name: yarn install
+        run: yarn install
+      - name: db create
+        run: bundle exec rails db:create db:schema:load --trace
+      - name: rspec
+        run: bundle exec rails rspec
