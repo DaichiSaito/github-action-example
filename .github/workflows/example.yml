@@ -24,7 +24,7 @@ jobs:
       # actions/checkoutリポジトリのaction.ymlを利用する
       uses: actions/setup-ruby@v1 # https://github.com/actions/setup-ruby/blob/master/action.yml
       with:
-        ruby-version: 2.6.x
+        ruby-version: 2.6.4
     - name: Test with Rspec
       run: |
         gem install bundler
